@@ -15,7 +15,7 @@ public class LinkList {
         first = nut;
     }
 
-//    Tạo ds
+    //    Tạo ds
     public void createList() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -38,7 +38,7 @@ public class LinkList {
         scanner.close();
     }
 
-//    Hiển thị
+    //    Hiển thị
     public void printList() {
         Link p = first;
         while (p != null) {
@@ -47,18 +47,18 @@ public class LinkList {
         }
     }
 
-//    Hiển thị điểm TB>=5
+    //    Hiển thị điểm TB>=5
     public void printDiem() {
         Link p = first;
         while (p != null) {
-            if (p.getDiem() >= 5){
+            if (p.getDiem() >= 5) {
                 System.out.println(p.getMaSV() + " " + p.getHoTen() + " " + p.getDiem() + " " + p.getKq() + " " + p.getXl());
             }
             p = p.nextLink;
         }
     }
 
-//    Lớn nhất
+    //    Lớn nhất
     public double printMax() {
         Link p = first;
         double max = p.getDiem();
@@ -72,23 +72,97 @@ public class LinkList {
         return max;
     }
 
-//    Điền dữ liệu đậu rớt vào kết quả
-    public void printKetQua(){
+    //    Điền dữ liệu đậu rớt vào kết quả
+    public void printKetQua() {
         Link p = first;
-        while (p != null){
+        while (p != null) {
             p.setKq(p.getDiem() >= 5 ? "Đậu" : "Gớt");
             System.out.println(p.getMaSV() + " " + p.getHoTen() + " " + p.getDiem() + " " + p.getKq());
             p = p.nextLink;
         }
     }
 
-//    Diền dữ liệu vào xếp loại
-    public void printXepLoai(){
+    //    Diền dữ liệu vào xếp loại
+    public void printXepLoai() {
         Link p = first;
-        while (p != null){
+        while (p != null) {
             p.setXl(p.getDiem() < 5 ? "Kém" : p.getDiem() < 7 ? "TB" : p.getDiem() < 8 ? "Khá" : "Giỏi");
             System.out.println(p.getMaSV() + " " + p.getHoTen() + " " + p.getDiem() + " " + p.getKq() + " " + p.getXl());
             p = p.nextLink;
         }
     }
+
+    public Link search(String maSV) {
+        Link p = first;
+        while ((p != null) && (p.getMaSV().equals(maSV) != true)) {
+            p = p.nextLink;
+        }
+        return p;
+    }
+
+    public void search02(String maSV) {
+        Link p = first;
+        while ((p != null) && (p.getMaSV().equals(maSV) != true)) {
+            p = p.nextLink;
+        }
+        if (p == null) {
+            System.out.println("KHoong co");
+        } else {
+            System.out.println("co");
+        }
+    }
+
+    public void delete(String maSV) {
+        Link p = search(maSV);
+        if (p != null) {
+            if (p == first) {
+                first = first.nextLink;
+            } else {
+                Link v, u = first;
+                while ((u.nextLink != p) && (u != null)) u = u.nextLink;
+                v=p.nextLink;
+                u.nextLink=v;
+            }
+            System.out.println("Xoa thanh cong!");
+        }else {
+            System.out.println("Xoa khong thanh cong");
+        }
+    }
+
+    public void sortList() {
+        if (first == null || first.nextLink == null) {
+            return;
+        }
+
+        boolean swapped;
+        do {
+            swapped = false;
+            Link current = first;
+            Link previous = null;
+
+            while (current != null && current.nextLink != null) {
+                Link next = current.nextLink;
+
+                if (current.getDiem() > next.getDiem()) {
+
+                    current.nextLink = next.nextLink;
+                    next.nextLink = current;
+
+                    if (previous == null) {
+
+                        first = next;
+                    } else {
+                        previous.nextLink = next;
+                    }
+
+                    swapped = true;
+                    previous = next;
+                } else {
+                    previous = current;
+                    current = current.nextLink;
+                }
+            }
+        } while (swapped);
+    }
+
 }
