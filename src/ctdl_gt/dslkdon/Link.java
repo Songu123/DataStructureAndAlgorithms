@@ -1,6 +1,8 @@
 package ctdl_gt.dslkdon;
 
-public class Link {
+import java.io.Serializable;
+
+public class Link  implements Serializable {
     private String maSV;
     private String hoTen;
     private double diem;

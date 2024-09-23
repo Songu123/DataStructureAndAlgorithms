@@ -1,9 +1,13 @@
 package ctdl_gt.dslkdon;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class LinkList {
+    public LinkDAO object = new LinkDAO();
     private Link first;
+    public List<Link> listMax = new ArrayList<>();
 
     public LinkList() {
         first = null;
@@ -69,6 +73,7 @@ public class LinkList {
             p = p.nextLink;
 
         }
+
         return max;
     }
 
@@ -81,6 +86,7 @@ public class LinkList {
             p = p.nextLink;
         }
     }
+
 
     //    Diền dữ liệu vào xếp loại
     public void printXepLoai() {
@@ -120,11 +126,11 @@ public class LinkList {
             } else {
                 Link v, u = first;
                 while ((u.nextLink != p) && (u != null)) u = u.nextLink;
-                v=p.nextLink;
-                u.nextLink=v;
+                v = p.nextLink;
+                u.nextLink = v;
             }
             System.out.println("Xoa thanh cong!");
-        }else {
+        } else {
             System.out.println("Xoa khong thanh cong");
         }
     }
@@ -165,4 +171,42 @@ public class LinkList {
         } while (swapped);
     }
 
+    public void sortWithNameIncrease() {
+        Link p, q;
+        String id, name;
+        double score = 0;
+        p = first;
+        while (p != null) {
+            q = p.nextLink;
+            while (q != null) {
+                if (p.getHoTen().compareTo(q.getHoTen()) > 0) {
+                    id = q.getMaSV();
+                    name = q.getHoTen();
+                    score = q.getDiem();
+
+                    q.setMaSV(p.getMaSV());
+                    q.setHoTen(p.getHoTen());
+                    q.setDiem(p.getDiem());
+
+                    p.setMaSV(id);
+                    p.setHoTen(name);
+                    p.setDiem(score);
+                }
+                q = q.nextLink;
+            }
+            p = p.nextLink;
+        }
+
+    }
+
+    public void ghiFile() {
+        insert("ma123", "Nguyen Van Son", 1);
+        insert("ma123", "Nguyen Van Son", 1);
+        insert("ma123", "Nguyen Van Son", 1);
+        object.writeFile(first);
+    }
+
+    public void docfile() {
+        first = object.readFile("/Users/admin/Documents/JAVA PROJECT/Data Structure and Algorithms/CTDLK21/src/ctdl_gt/dslkdon/savefile");
+    }
 }
