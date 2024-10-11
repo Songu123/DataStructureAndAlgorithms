@@ -55,8 +55,6 @@ public class Main {
                     System.out.println("Nhập sai! Vui lòng nhập lại!");
             }
         }
-
-        sc.close(); // Đóng Scanner khi không sử dụng nữa
     }
 
     public static void printMenu() {
